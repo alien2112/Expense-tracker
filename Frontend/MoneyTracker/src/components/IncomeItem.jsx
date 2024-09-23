@@ -23,71 +23,43 @@ import {
 } from "../utils/Icons";
 import Button from "./Button/Button";
 import { dateFormat } from "../utils/dateFormat";
-function IncomeItem({
+
+const IncomeItem = ({
   id,
   title,
   amount,
   date,
   category,
   description,
-  descrription,
   deleteItem,
   indicatorColor,
   type,
-}) {
-  const categoryIcon = () => {
-    switch (category) {
-      case "salary":
-        return money;
-      case "freelancing":
-        return freelance;
-      case "investments":
-        return stocks;
-      case "stocks":
-        return users;
-      case "bitcoin":
-        return bitcoin;
-      case "other":
-        return piggy;
-      case "bank":
-        return card;
-      case "youtube":
-        return yt;
-      default:
-        return "";
-    }
+}) => {
+  const getCategoryIcon = () => {
+    const icons = {
+      salary: money,
+      freelancing: freelance,
+      investments: stocks,
+      stocks: users,
+      bitcoin: bitcoin,
+      other: piggy,
+      bank: card,
+      youtube: yt,
+      education: book,
+      groceries: food,
+      health: medical,
+      subscriptions: tv,
+      takeaways: takeaway,
+      clothing: clothing,
+      travelling: freelance,
+      default: circle,
+    };
+    return type === "expense" ? icons[category] || icons.default : icons[category] || "";
   };
 
-
-      const expenseCatIcon = () => {
-        switch (category) {
-          case "education":
-            return book;
-          case "groceries":
-            return food;
-          case "health":
-            return medical;
-          case "subscriptions":
-            return tv;
-          case "takeaways":
-            return takeaway;
-          case "clothing":
-            return clothing;
-          case "travelling":
-            return freelance;
-          case "other":
-            return circle;
-          default:
-            return "";
-        }
-      };
-      
-
   return (
-    <IncomeItemStyled indicator={indicatorColor}>
-      <div className="icon">
-        {type === "expense" ? expenseCatIcon() : categoryIcon()}
-      </div>
+    <StyledIncomeItem indicator={indicatorColor}>
+      <div className="icon">{getCategoryIcon()}</div>
       <div className="content">
         <h5>{title}</h5>
         <div className="inner-content">
@@ -99,8 +71,7 @@ function IncomeItem({
               {calender} {dateFormat(date)}
             </p>
             <p>
-              {comment}
-              {description}
+              {comment} {description}
             </p>
           </div>
           <div className="btn-cont">
@@ -108,7 +79,7 @@ function IncomeItem({
               icon={trash}
               bPad={"1rem"}
               bRad={"50%"}
-              bg={"var(--primary-color"}
+              bg={"var(--primary-color)"}
               color={"#fff"}
               iColor={"#fff"}
               hColor={"var(--color-green)"}
@@ -117,32 +88,45 @@ function IncomeItem({
           </div>
         </div>
       </div>
-    </IncomeItemStyled>
+    </StyledIncomeItem>
   );
-}
-const IncomeItemStyled = styled.div`
-  background: #fcf6f9;
+};
+
+const StyledIncomeItem = styled.div`
+  background: linear-gradient(135deg, #fcf6f9, #e0e0e0);
   border: 2px solid #ffffff;
-  box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
-  padding: 1rem;
-  margin-bottom: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  width: 100%;
+  gap: 1.5rem;
   color: #222260;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 25px rgba(0, 0, 0, 0.15);
+  }
+
   .icon {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     border-radius: 20px;
     background: #f5f5f5;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2px solid #ffffff;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: #e0e0e0;
+    }
+
     i {
-      font-size: 2.6rem;
+      font-size: 2.8rem;
     }
   }
 
@@ -150,19 +134,22 @@ const IncomeItemStyled = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0.5rem;
+
     h5 {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       padding-left: 2rem;
       position: relative;
+      font-weight: bold;
+
       &::before {
         content: "";
         position: absolute;
         left: 0;
         top: 50%;
         transform: translateY(-50%);
-        width: 0.8rem;
-        height: 0.8rem;
+        width: 1rem;
+        height: 1rem;
         border-radius: 50%;
         background: ${(props) => props.indicator};
       }
@@ -172,16 +159,19 @@ const IncomeItemStyled = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       .text {
         display: flex;
         align-items: center;
-        gap: 1.5rem;
+        gap: 2rem;
+
         p {
           display: flex;
           align-items: center;
           gap: 0.5rem;
           color: var(--primary-color);
-          opacity: 0.8;
+          opacity: 0.9;
+          font-size: 1rem;
         }
       }
     }
@@ -189,3 +179,5 @@ const IncomeItemStyled = styled.div`
 `;
 
 export default IncomeItem;
+
+

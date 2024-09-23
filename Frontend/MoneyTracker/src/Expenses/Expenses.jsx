@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import { motion, AnimatePresence } from "framer-motion";
 import { useGlobalContext } from "../context/globalContext";
-import { InnerLayout } from "../styles/Layout";
 import IncomeItem from "../components/IncomeItem";
 import ExpenseForm from "./ExpenseForm";
 
@@ -12,83 +12,87 @@ function Expenses() {
   useEffect(() => {
     getExpense();
   }, []);
+
   return (
     <ExpenseStyled>
-      <InnerLayout>
-        <h1>Expenses</h1>
-        <h2 className="total-income">
-          Total Expense: <span>${totalExpense()}</span>
-        </h2>
-        <div className="income-content">
-          <div className="form-container">
-            <ExpenseForm />
-          </div>
-          <div className="incomes">
-            {expenses.map((income) => {
-              const { _id, title, amount, date, category, description, type } =
-                income;
-              console.log(income);
-              return (
+      <h1>Expenses</h1>
+      <TotalExpense>
+        Total Expense: <span>${totalExpense()}</span>
+      </TotalExpense>
+      <ExpenseContent>
+        <FormContainer>
+          <ExpenseForm />
+        </FormContainer>
+        <ExpensesContainer>
+          <AnimatePresence>
+            {expenses.map((expense) => (
+              <motion.div
+                key={expense._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
                 <IncomeItem
-                  key={_id}
-                  id={_id}
-                  title={title}
-                  description={description}
-                  amount={amount}
-                  date={date}
-                  type={type}
-                  category={category}
-                  indicatorColor="var(--color-green)"
+                  id={expense._id}
+                  title={expense.title}
+                  description={expense.description}
+                  amount={expense.amount}
+                  date={expense.date}
+                  type={expense.type}
+                  category={expense.category}
+                  indicatorColor="#ff0000"
                   deleteItem={deleteExpense}
                 />
-              );
-            })}
-          </div>
-        </div>
-      </InnerLayout>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </ExpensesContainer>
+      </ExpenseContent>
     </ExpenseStyled>
   );
 }
 
 const ExpenseStyled = styled.div`
-  border: 2px solid #ffffff;
-  border-radius: 20px;
-  backdrop-filter: blur(4.5px);
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: #fff;
+  }
+`;
+
+const TotalExpense = styled.h2`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 0, 0, 0.2);
+  border-radius: 20px;
   padding: 1rem;
-  margin: 1rem 0;
-  background: #fcf6f9;
-  box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
-  height: 100vh;
-
-  .total-income {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #fcf6f9;
-    border: 2px solid #ffffff;
-    box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
-    border-radius: 20px;
-    padding: 1rem;
-    margin: 1rem 0;
-    font-size: 2rem;
-    gap: 0.5rem;
-
-    span {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--color-green);
-    }
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  gap: 0.5rem;
+  span {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ff0000;
   }
+`;
 
-  .income-content {
-    display: flex;
-    gap: 2rem;
-    overflow: auto;
-    .incomes {
-      flex: 1;
-    }
+const ExpenseContent = styled.div`
+  display: flex;
+  gap: 2rem;
+  @media (max-width: 1024px) {
+    flex-direction: column;
   }
+`;
+
+const FormContainer = styled.div`
+  flex: 1;
+`;
+
+const ExpensesContainer = styled.div`
+  flex: 2;
 `;
 
 export default Expenses;

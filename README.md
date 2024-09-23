@@ -22,12 +22,12 @@ The Financial Dashboard is a React application designed to help users track thei
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/financial-dashboard.git
+   git clone https://github.com/alien2112/Expense-tracker.git
    ```
 
 2. Navigate to the project directory:
    ```bash
-   cd financial-dashboard
+   cd Expense-tracker
    ```
 
 3. Install the dependencies:
@@ -37,7 +37,8 @@ The Financial Dashboard is a React application designed to help users track thei
 
 4. Start the development server:
    ```bash
-   npm start
+   npm start for the backend
+   npm run dev for the frontend
    ```
 
 5. Open your browser and go to `http://localhost:5173` to view the application.

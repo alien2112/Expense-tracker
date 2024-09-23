@@ -51,9 +51,4 @@ The Financial Dashboard is a React application designed to help users track thei
 - **Viewing History**: The recent transactions can be viewed in the "Recent Transactions" section.
 - **Analyzing Data**: Users can visualize their financial data through the provided charts.
 
-## Contributing
-Contributions are welcome! If you have suggestions for improvements or want to report bugs, please open an issue or submit a pull request.
-
-## Acknowledgements
-- Thanks to the contributors of the libraries used in this project.
 

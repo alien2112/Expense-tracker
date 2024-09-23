@@ -17,6 +17,9 @@ The Financial Dashboard is a React application designed to help users track thei
 - Styled Components
 - Framer Motion for animations
 - Recharts for data visualization
+- Node js
+- Mongo DB
+  
 
 ## Installation
 
